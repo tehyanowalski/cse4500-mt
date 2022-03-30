@@ -1,37 +1,53 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Customer;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 
-
-
-class UserController extends Controller
+class CustomerController extends Controller
 {
     /**
-     * List View
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $user = User::all();
-        // return json_encode(compact('user'));
-        return view('user.list', compact('user'));
-
+        $customers = Customer::all();
+        return view('customer.list', compact('customer'));
     }
 
     /**
-     * Detail View
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $user = User::find($id);
-        // Lazy Loading
-        $User->invoice;
-        return view('user.detail', compact('user'));
+        //
     }
 
     /**
@@ -65,7 +81,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        Customer::destroy($id);
-        return redirect('/user');
+        //
     }
 }
