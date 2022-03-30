@@ -225,39 +225,36 @@ return [
     */
 
     'menu' => [
-        // Navbar items:
-        [
-            'type'         => 'navbar-search',
-            'text'         => 'search',
-            'topnav_right' => true,
+         [
+            'type' => 'sidebar-menu-search',
+            'text' => 'search',
         ],
         [
-            'type'         => 'fullscreen-widget',
-            'topnav_right' => true,
+            'text' => 'Invoice',
+            'url'  => 'invoice',
+            'icon' => 'fas fa-fw fa-file',
         ],
-
-        // Sidebar items:
-        'menu' => [
-    [
-        'type' => 'sidebar-menu-search',
-        'text' => 'search',
-    ],     
-    [
-        'text' => 'To Do\'s',
-        'url'  => 'todos',
-        'icon' => 'fas fa-fw fa-file',
+        [
+            'text' => 'User',
+            'url'  => 'user',
+            'icon' => 'fas fa-fw fa-file',
+        ],
+        [         
+            'text' => 'Equipment',
+            'url'  => 'equipment',
+            'icon' => 'fas fa-fw fa-calendar-alt',
+        ],
+        [
+            'text' => 'Manufacturer',
+            'url'  => 'manufacturer',
+            'icon' => 'fas fa-fw fa-file',
+        ],
+        [
+            'text' => 'Notes',
+            'url'  => 'note',
+            'icon' => 'fas fa-fw fa-file',
+        ],
     ],
-    [         
-        'text' => 'Calendar',
-        'url'  => 'calendar',
-        'icon' => 'fas fa-fw fa-calendar-alt',
-    ],
-    [
-        'text' => 'Board',
-        'url'  => 'board',
-        'icon' => 'fas fa-fw fa-columns',
-    ],
-],
     /*
     |--------------------------------------------------------------------------
     | Menu Filters
