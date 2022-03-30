@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Manufacturer;
 
-class ManufacturerController extends Controller
+class ManufactureController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class ManufacturerController extends Controller
      */
     public function index()
     {
-        $manufacturer = Manufacturer::all();
-        return json_encode(compact('manufacturer'));
+        $manufacture = Manufacture::all();
+        return json_encode(compact('manufacture'));
     }
 
     /**
