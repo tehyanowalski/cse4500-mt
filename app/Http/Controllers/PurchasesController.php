@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Invoice;
+use App\Models\Purchases;
 
-class InvoiceController extends Controller
+class PurchasesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $invoice = Invoice::all();
-        return json_encode(compact('invoice'));
+        $purchases = Purchases::all();
+        return json_encode(compact('purchases'));
     }
 
     /**
@@ -26,11 +26,10 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-        $invoice = Invoice::find($id);
-        // Lazy Loading
-        $invoice->user;
-        $invoice->equipment;
-        return json_encode(compact('invoice'));
+        $purchases = Invoice::find($id);
+        $purchases->customer;
+        $purchases->equipment;
+        return json_encode(compact('purchases'));
     }
 
     /**
