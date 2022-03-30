@@ -14,7 +14,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $invoices = Invoice::all();
+        $invoice = Invoice::all();
         return json_encode(compact('invoice'));
     }
 
