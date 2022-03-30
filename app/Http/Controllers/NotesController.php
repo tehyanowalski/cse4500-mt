@@ -16,7 +16,8 @@ class NotesController extends Controller
      */
     public function index()
     {
-        //
+        $notes = Notes::all();
+        return view('notes',compact('notes'));
     }
 
     /**
@@ -37,7 +38,21 @@ class NotesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+             'equipment_id' => 'required',
+             'service' => 'required',
+             'software' => 'required',
+             'notes' => 'notes'
+        ]);
+
+        $notes = Notes::create([ 
+             'equipment_id' => $request->equipment_id, 
+             'service' => $request->service,
+             'software' => $request->software,
+             'notes' => 'notes'
+        ]);
+
+        return $this->index();
     }
 
     /**
@@ -48,7 +63,8 @@ class NotesController extends Controller
      */
     public function show($id)
     {
-        //
+        $notes= Notes::find($id); 
+        return view('notes.show',compact('notes'));
     }
 
     /**
