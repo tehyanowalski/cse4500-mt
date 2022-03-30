@@ -232,27 +232,27 @@ return [
         [
             'text' => 'Equipment',
             'url'  => 'equipment',
-            'icon' => 'fa-desktop',
+            'icon' => 'fas fa-fw fa-desktop',
         ],
         [
             'text' => 'Manufacture',
             'url'  => 'manufacture',
-            'icon' => 'fa-briefcase',
+            'icon' => 'fas fa-fw fa-briefcase',
         ],
         [         
             'text' => 'Customer',
             'url'  => 'customer',
-            'icon' => 'fa-user',
+            'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text' => 'Purchases',
             'url'  => 'purchases',
-            'icon' => ' fa-credit-card',
+            'icon' => 'fas fa-fw fa-credit-card',
         ],
         [
             'text' => 'Notes',
             'url'  => 'notes',
-            'icon' => 'fa-th-list',
+            'icon' => 'fas fa-fw fa-th-list',
         ],
     ],
     /*
