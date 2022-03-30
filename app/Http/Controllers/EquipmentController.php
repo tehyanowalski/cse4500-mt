@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Equipment;
+use Kris\LaravelFormBuilder\FormBuilder;
+use App\Forms\EquipmentForm;
 
 
 class EquipmentController extends Controller
@@ -17,6 +19,34 @@ class EquipmentController extends Controller
     {
         $equipment = Equipment::all();
         return json_encode(compact('equipment'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(FormBuilder $formBuilder)
+    {
+        $form = $formBuilder->create(EquipmentForm::class, [
+            'method' => 'POST',
+            'url' => route('equipment.store')
+        ]);
+        return view('equipment.create', compact('form'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(FormBuilder $formBuilder)
+    {
+        $form = $formBuilder->create(EquipmentForm::class);
+        $form->redirectIfNotValid();
+        Equipment::create($form->getFieldValues());
+        return $this->index();
     }
 
     /**
