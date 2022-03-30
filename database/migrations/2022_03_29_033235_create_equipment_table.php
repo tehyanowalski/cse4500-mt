@@ -18,10 +18,10 @@ return new class extends Migration
             $table->timestamps();
             $table->string("name");
             $table->string("price");
-            $table->string("ghz");
+            $table->string("version");
             $table->string("ram");
             $table->enum('category', ['desktop', 'laptop', 'tablet']);
-            $table->foreignId('manufacturer_id')->constrained("manufacturer");
+            $table->foreignId('manufacture_id')->constrained("manufacture");
 
         });
     }
