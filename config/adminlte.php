@@ -230,23 +230,23 @@ return [
             'text' => 'search',
         ],
         [
-            'text' => 'Invoice',
-            'url'  => 'invoice',
-            'icon' => 'fas fa-fw fa-file',
-        ],
-        [
-            'text' => 'User',
-            'url'  => 'user',
-            'icon' => 'fas fa-fw fa-file',
-        ],
-        [         
             'text' => 'Equipment',
             'url'  => 'equipment',
-            'icon' => 'fas fa-fw fa-calendar-alt',
+            'icon' => 'fas fa-fw fa-file',
         ],
         [
             'text' => 'Manufacturer',
             'url'  => 'manufacturer',
+            'icon' => 'fas fa-fw fa-file',
+        ],
+        [         
+            'text' => 'User',
+            'url'  => 'user',
+            'icon' => 'fas fa-fw fa-calendar-alt',
+        ],
+        [
+            'text' => 'Invoice',
+            'url'  => 'invoice',
             'icon' => 'fas fa-fw fa-file',
         ],
         [
