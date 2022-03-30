@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Notes;
+use Kris\LaravelFormBuilder\FormBuilder;
+use App\Forms\CustomerForm;
 
 class NotesController extends Controller
 {
