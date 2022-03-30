@@ -1,53 +1,61 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Customer;
 
 use Illuminate\Http\Request;
+use App\Models\Customer;
+use Kris\LaravelFormBuilder\FormBuilder;
+use App\Forms\CustomerForm;
+
+
 
 class CustomerController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * List View
      */
     public function index()
     {
-        $customer = Customer::all();
+        $customers = Customer::all();
+        // return json_encode(compact('customer'));
         return view('customer.list', compact('customer'));
+
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(FormBuilder $formBuilder)
     {
-        //
+        $form = $formBuilder->create(CustomerForm::class, [
+            'method' => 'POST',
+            'url' => route('customer.store')
+        ]);
+        return view('customer.create', compact('form'));
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormBuilder $formBuilder)
     {
-        //
+        $form = $formBuilder->create(CustomerForm::class);
+        $form->redirectIfNotValid();
+        Customer::create($form->getFieldValues());
+        return $this->index();
     }
 
     /**
-     * Display the specified resource.
+     * Detail View
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $customer = Customer::find($id);
+        $customer->invoices;
+        return view('customer.detail', compact('customer'));
     }
 
     /**
@@ -81,6 +89,7 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Customer::destroy($id);
+        return redirect('/customer');
     }
 }
