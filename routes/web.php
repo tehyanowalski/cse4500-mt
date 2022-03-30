@@ -23,6 +23,8 @@ Route::resource('/equipment', EquipmentController::class);
 Route::resource('/invoice', InvoiceController::class);
 
 
+URL::forceScheme('https');
+
 Route::get('/', function () {
     return view('welcome');
 });
