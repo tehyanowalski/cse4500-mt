@@ -17,9 +17,7 @@ class CustomerController extends Controller
     public function index()
     {
         $customers = Customer::all();
-        // return json_encode(compact('customer'));
         return view('customer.list', compact('customers'));
-
     }
 
     /**
