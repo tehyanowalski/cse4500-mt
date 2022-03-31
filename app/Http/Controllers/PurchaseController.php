@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Purchases;
+use App\Models\Purchase;
 use App\Models\Equipment;
-use Kris\LaravelFormBuilder\FormBuilder;
-use App\Forms\PurchasesForm;
 
-class PurchasesController extends Controller
+use Kris\LaravelFormBuilder\FormBuilder;
+use App\Forms\PurchaseForm;
+
+class PurchaseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +18,8 @@ class PurchasesController extends Controller
      */
     public function index()
     {
-        $purchases = Purchases::all();
-        return view('purchases.list', compact('purchases'));
+        $purchases = Purchase::all();
+        return view('purchase.list', compact('purchases'));
     }
 
     /**
@@ -28,16 +29,16 @@ class PurchasesController extends Controller
      */
     public function create(FormBuilder $formBuilder, Request $request)
     {
-        $form = $formBuilder->create(PurchasesForm::class, [
+        $form = $formBuilder->create(InvoiceForm::class, [
             'method' => 'POST',
-            'url' => route('purchases.store'),
+            'url' => route('purchase.store'),
         ]);
         $user = $request->get('user', 0);
         $form->modify('customer_id', "number", [
             'default_value' => $user,
         ]);
         
-        return view('purchases.create', compact('form'));
+        return view('purchase.create', compact('form'));
     }
 
     /**
@@ -48,9 +49,9 @@ class PurchasesController extends Controller
      */
     public function store(FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(PurchasesForm::class);
+        $form = $formBuilder->create(PurchaseForm::class);
         $form->redirectIfNotValid();
-        $purchases = Purchases::create($form->getFieldValues());
+        $purchase = Purchase::create($form->getFieldValues());
         return $this->index();
     }
 
@@ -62,25 +63,29 @@ class PurchasesController extends Controller
      */
     public function show($id)
     {
-        $purchases = Purchases::find($id);
-        return view('purchases.detail', compact('purchases'));
+        $purchase = Purchase::find($id);
+        return view('purchase.detail', compact('purchase'));
     }
 
-    public function deleteItem($purchasesID, $itemID)
-    {
-        $purchases = Purchases::find($purchasesID);
-        $purchases->equipment()->detach($itemID);
-        return redirect('/purchases/' . $purchasesID);
+
+    public function deleteItem($purchaseID, $itemID) {
+
+        $purchase = Purchase::find($purchaseID);
+
+        $purchase->equipments()->detach($itemID);
+
+        return redirect('/purchase/' . $purchaseID);
     }
-    
-    public function addItem($purchasesID, $itemID) 
-    {
-        $purchases = Invoice::find($purchasesID);
-        $purchases->equipment()->attach($itemID);
-        return redirect('/purchases/' . $purchasesID);
+
+    public function addItem($purchaseID, $itemID) {
+        $purchase = Purchase::find($purchaseID);
+
+        $purchase->equipments()->attach($itemID);
+
+        return redirect('/purchase/' . $purchaseID);
 
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -89,14 +94,14 @@ class PurchasesController extends Controller
      */
     public function edit($id, FormBuilder $formBuilder)
     {
-        $purchases = Purchases::find($id);
+        $purchase = Purchase::find($id);
 
-        $form = $formBuilder->create(PurchasesForm::class, [
+        $form = $formBuilder->create(PurchaseForm::class, [
             'method' => 'PUT',
-            'url' => route('purchases.update', ['purchases'=>$purchases->id]),
-            'model' => $purchases,
+            'url' => route('purchase.update', ['purchase'=>$purchase->id]),
+            'model' => $purchase,
         ]);
-        return view('purchases.create', compact('form'));
+        return view('purchase.create', compact('form'));
     }
 
     /**
@@ -108,13 +113,13 @@ class PurchasesController extends Controller
      */
     public function update(Request $request, $id, FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(PurchasesForm::class);
+        $form = $formBuilder->create(PurchaseForm::class);
         $form->redirectIfNotValid();
 
-        $purchases = Purchases::find($id);
-        $purchases->update($form->getFieldValues());
+        $purchase = Purchase::find($id);
+        $purchase->update($form->getFieldValues());
 
-        return redirect('/purchases/' . $id);
+        return redirect('/purchase/' . $id);
     }
 
     /**
@@ -125,7 +130,7 @@ class PurchasesController extends Controller
      */
     public function destroy($id)
     {
-        Purchases::destroy($id);
-        return redirect('/purchases');
+        Purchase::destroy($id);
+        return redirect('/purchase');
     }
 }
