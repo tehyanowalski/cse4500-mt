@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Purchase;
+use App\Models\Notes;
+use App\Models\Manufacturer;
 
 class Equipment extends Model
 {
@@ -17,7 +20,6 @@ class Equipment extends Model
         'category',
         'manufacturer_id',
     ];
-
     protected $table = 'equipment';
     
     public function manufacturer()
@@ -28,11 +30,6 @@ class Equipment extends Model
        public function notes()
     {
         return $this->hasMany(Notes::class);
-    }
-    
-      public function num_of_notes()
-    {
-        return count($this->notes);
     }
 
     public function purchases()
