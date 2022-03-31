@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('manufacture', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string("name");
-            $table->string("tech_email");
-            $table->string("tech_phone");
-            $table->string("sales_email");
-            $table->string("sales_phone");
+            $table->string('name');
+            $table->string('tech_email');
+            $table->string('tech_phone');
+            $table->string('sales_email');
+            $table->string('sales_phone');
         });
     }
 
