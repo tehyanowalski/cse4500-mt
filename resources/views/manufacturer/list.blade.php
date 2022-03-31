@@ -9,18 +9,22 @@
 @section('content')
 <div class="card">
   <div class="card-body">
-    <table id="table" class="table table-bordered">
+    <table id="table" class="table table-bordered sortable">
       <thead>
         <tr>
-          <th style="width: 10px">#</th><th>Brand</th><th style="width: 40px">Action</th>
+          <th style="width: 10px">#</th><th>Name</th><th style="width: 40px">Support Email</th><th style="width: 40px">Support Phone</th><th style="width: 40px">Sales Email</th><th style="width: 40px">Sales Phone Number</th>
         </tr>
       </thead>
       <tbody>
-        @foreach($manufacturers AS $manufacturer)
+        @foreach($manufacturer AS $manufacturer)
         <tr>
           <td>{{ $manufacturer->id }}</td>
           <td>{{ $manufacturer->name }}</td>
-          <td><a class="btn btn-default btn-sm" href="{{ route('manufacturer.show',['manufacturer'=>$manufacturer->id]) }}">View</a></td>
+          <td>{{ $manufacturer->tech_email }}</td>
+          <td>{{ $manufacturer->tech_phone }}</td>
+          <td>{{ $manufacturer->sales_email }}</td>
+          <td>{{ $manufacturer->sales_phone }}</td>
+          <td><a class="btn btn-default btn-sm" href="{{ route('manufacturer.show',['manufacturer'=>$manufacturer->id]) }}" style="float:right;">View</a></td>
         </tr>
         @endforeach
       </tbody>
@@ -28,4 +32,7 @@
   </div>
 </div>
 <a href="{{ route('manufacturer.create') }} " class="btn btn-primary" >Create</a>
+
+
+
 @stop
