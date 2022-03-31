@@ -236,7 +236,7 @@ return [
         ],
         [
             'text' => 'Manufacture',
-            'url'  => 'manufacture',
+            'url'  => 'manufacturer',
             'icon' => 'fas fa-fw fa-briefcase',
         ],
         [         
@@ -246,7 +246,7 @@ return [
         ],
         [
             'text' => 'Purchases',
-            'url'  => 'purchases',
+            'url'  => 'purchase',
             'icon' => 'fas fa-fw fa-credit-card',
         ],
         [
