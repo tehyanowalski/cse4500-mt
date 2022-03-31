@@ -9,31 +9,30 @@
 @section('content')
 <div class="card">
   <div class="card-body">
-    <table id="table" class="table table-bordered">
+    <table id="table" class="table table-bordered sortable">
       <thead>
         <tr>
-          <th style="width: 60px;">ID #</th>
-          <th>Customer</th>
-          <th>Items</th>
-          <th>Total Cost</th>
-          <th>Purchase Date</th>
-          <th style="width: 40px">Action</th>
+          <th style="width: 10px">#</th><th>Invoice Number</th><th style="width: 40px">Price</th><th style="width: 40px">Purchase Date</th><th style="width: 40px">Equipment ID</th><th style="width: 40px">Customer ID</th>
         </tr>
       </thead>
       <tbody>
-        @foreach($purchases AS $purchase)
+        @foreach($invoice AS $invoice)
         <tr>
-          <td>{{ $purchase->id }}</td>
-          <td>{{ $purchase->customer->fullname }}</td>
-          <td>{{ $purchase->number_of_items() }}</td>
-          <td>${{ $purchase->total_price() }}</td>
-          <td>{{ $purchase->purchase_date }}</td>
-          <td><a class="btn btn-default btn-sm" href="{{ route('purchase.show',['purchase'=>$purchase->id]) }}">View</a></td>
+          <td>{{ $invoice->id }}</td>
+          <td>{{ $invoice->invoice_num }}</td>
+          <td>{{ $invoice->price }}</td>
+          <td>{{ $invoice->purchase_date }}</td>
+          <td>{{ $invoice->equipment_id }}</td>
+          <td>{{ $invoice->customer_id }}</td>
+          <td><a class="btn btn-default btn-sm" href="{{ route('invoice.show',['invoice'=>$invoice->id]) }}" style="float:right;">View</a></td>
         </tr>
         @endforeach
       </tbody>
     </table>
   </div>
 </div>
-<a href="{{ route('purchase.create') }} " class="btn btn-primary" >Create</a>
+<a href="{{ route('invoice.create') }} " class="btn btn-primary" >Create</a>
+
+
+
 @stop
