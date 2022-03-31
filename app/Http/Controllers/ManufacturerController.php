@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Manufacture;
+use App\Models\Manufacturer;
 use Kris\LaravelFormBuilder\FormBuilder;
-use App\Forms\ManufactureForm;
+use App\Forms\ManufacturerForm;
 
-class ManufactureController extends Controller
+class ManufacturerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class ManufactureController extends Controller
      */
     public function index()
     {
-        $manufacture = Manufacture::all();
-        return view('manufacture.list', compact('manufacture'));
+        $manufacturers = Manufacturer::all();
+        return view('manufacturer.list', compact('manufacturers'));
     }
 
     /**
@@ -27,11 +27,11 @@ class ManufactureController extends Controller
      */
     public function create(FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(ManufactureForm::class, [
+        $form = $formBuilder->create(ManufacturerForm::class, [
             'method' => 'POST',
-            'url' => route('manufacture.store')
+            'url' => route('manufacturer.store')
         ]);
-        return view('manufacture.create', compact('form'));
+        return view('manufacturer.create', compact('form'));
     }
 
     /**
@@ -42,9 +42,9 @@ class ManufactureController extends Controller
      */
     public function store(FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(ManufactureForm::class);
+        $form = $formBuilder->create(ManufacturerForm::class);
         $form->redirectIfNotValid();
-        Manufacture::create($form->getFieldValues());
+        Manufacturer::create($form->getFieldValues());
         return $this->index();
     }
 
@@ -56,8 +56,8 @@ class ManufactureController extends Controller
      */
     public function show($id)
     {
-        $manufacture = Manufacture::find($id);
-        return view('manufacture.detail', compact('manufacture'));
+        $manufacturer = Manufacturer::find($id);
+        return view('manufacturer.detail', compact('manufacturer'));
     }
 
     /**
@@ -66,16 +66,16 @@ class ManufactureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, FormBuilder $formBuilder)
+    public function edit($id,  FormBuilder $formBuilder)
     {
-        $manufacture = Manufacture::find($id);
+        $manufacturer = Manufacturer::find($id);
 
-        $form = $formBuilder->create(ManufactureForm::class, [
+        $form = $formBuilder->create(ManufacturerForm::class, [
             'method' => 'PUT',
-            'url' => route('manufacture.update', ['manufacture'=>$manufacture->id]),
-            'model' => $manufacture,
+            'url' => route('manufacturer.update', ['manufacturer'=>$manufacturer->id]),
+            'model' => $manufacturer,
         ]);
-        return view('manufacture.create', compact('form'));
+        return view('manufacturer.create', compact('form'));
     }
 
     /**
@@ -87,13 +87,13 @@ class ManufactureController extends Controller
      */
     public function update(Request $request, $id, FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(ManufactureForm::class);
+        $form = $formBuilder->create(ManufacturerForm::class);
         $form->redirectIfNotValid();
 
-        $manufacture = Manufacture::find($id);
-        $manufacture->update($form->getFieldValues());
+        $manufacturer = Manufacturer::find($id);
+        $manufacturer->update($form->getFieldValues());
 
-        return redirect('/manufacture/' . $id);
+        return redirect('/manufacturer/' . $id);
     }
 
     /**
@@ -104,7 +104,7 @@ class ManufactureController extends Controller
      */
     public function destroy($id)
     {
-        Manufacture::destroy($id);
-        return redirect('/manufacture');
+        Manufacturer::destroy($id);
+        return redirect('/manufacturer');
     }
 }
