@@ -67,7 +67,7 @@ class EquipmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, FormBuilder $formBuilder)
     {
         $equipment = Equipment::find($id);
 
@@ -86,7 +86,7 @@ class EquipmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, FormBuilder $formBuilder)
     {
         $form = $formBuilder->create(EquipmentForm::class);
         $form->redirectIfNotValid();
