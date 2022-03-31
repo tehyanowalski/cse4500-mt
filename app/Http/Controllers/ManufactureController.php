@@ -17,7 +17,7 @@ class ManufactureController extends Controller
     public function index()
     {
         $manufacture = Manufacture::all();
-        return json_encode(compact('manufacture'));
+        return view('manufacture.list', compact('manufacture'));
     }
 
     /**
@@ -56,7 +56,8 @@ class ManufactureController extends Controller
      */
     public function show($id)
     {
-        //
+        $manufacture = Manufacture::find($id);
+        return view('manufacture.detail', compact('manufacture'));
     }
 
     /**
@@ -65,9 +66,16 @@ class ManufactureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, FormBuilder $formBuilder)
     {
-        //
+        $manufacture = Manufacture::find($id);
+
+        $form = $formBuilder->create(ManufactureForm::class, [
+            'method' => 'PUT',
+            'url' => route('manufacture.update', ['manufacture'=>$manufacture->id]),
+            'model' => $manufacture,
+        ]);
+        return view('manufacture.create', compact('form'));
     }
 
     /**
@@ -77,9 +85,15 @@ class ManufactureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, FormBuilder $formBuilder)
     {
-        //
+        $form = $formBuilder->create(ManufactureForm::class);
+        $form->redirectIfNotValid();
+
+        $manufacture = Manufacture::find($id);
+        $manufacture->update($form->getFieldValues());
+
+        return redirect('/manufacture/' . $id);
     }
 
     /**
@@ -90,6 +104,7 @@ class ManufactureController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Manufacture::destroy($id);
+        return redirect('/manufacture');
     }
 }
