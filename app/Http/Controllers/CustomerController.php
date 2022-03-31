@@ -16,8 +16,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::all();
-        return view('customer.list', compact('customers'));
+        $customer = Customer::all();
+        return view('customer.list', compact('customer'));
     }
 
     /**
@@ -52,8 +52,7 @@ class CustomerController extends Controller
     public function show($id)
     {
         $customer = Customer::find($id);
-        $customer->purchases;
-        return view('customer.detail', compact('customer'));
+        return view('customer.details', compact('customer'));
     }
 
     /**
@@ -62,16 +61,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, FormBuilder $formBuilder)
+    public function edit($id)
     {
-        $customer = Customer::find($id);
-
-        $form = $formBuilder->create(CustomerForm::class, [
-            'method' => 'PUT',
-            'url' => route('customer.update', ['customer'=>$customer->id]),
-            'model' => $customer,
-        ]);
-        return view('customer.create', compact('form'));
+        //
     }
 
     /**
@@ -81,15 +73,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, FormBuilder $formBuilder)
+    public function update(Request $request, $id)
     {
-        $form = $formBuilder->create(CustomerForm::class);
-        $form->redirectIfNotValid();
-
-        $customer = Customer::find($id);
-        $customer->update($form->getFieldValues());
-
-        return redirect('/customer/' . $id);
+        //
     }
 
     /**
@@ -100,7 +86,6 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        Customer::destroy($id);
-        return redirect('/customer');
+      //
     }
 }
