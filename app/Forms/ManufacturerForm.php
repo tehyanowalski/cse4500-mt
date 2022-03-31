@@ -6,7 +6,7 @@ use Kris\LaravelFormBuilder\Form;
 use Kris\LaravelFormBuilder\Field;
 
 
-class ManufactureForm extends Form
+class ManufacturerForm extends Form
 {
     public function buildForm()
     {
