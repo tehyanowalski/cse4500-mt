@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string("service");
             $table->string("software");
             $table->string("content");
-            $table->foreignId('equipment_id')->constrained("equipment")->onDelete('cascade');;
+            $table->foreignId('equipment_id')->constrained("equipments")->onDelete('cascade');;
         });
     }
 
