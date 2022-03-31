@@ -10,7 +10,7 @@ class CustomerForm extends Form
     public function buildForm()
     {
         $this
-            ->add('fullname', Field::TEXT, [
+            add('fullname', Field::TEXT, [
                 'rules' => 'required',
                 'label' => 'Full Name'
             ])
