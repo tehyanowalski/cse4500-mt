@@ -10,37 +10,11 @@ class Purchase extends Model
     use HasFactory;
 
     protected $fillable = [
-        'purchase_date',
-        'customer_id'
-    ];
-
-
-    public function customer()
-    {
-        return $this->belongsTo(Customer::class);
-    }
-
-    public function equipments()
-    {
-        return $this->belongsToMany(Equipment::class, 'purchase_equipment')->distinct();;
-    }
-
-    public function number_of_items()
-    {
-        return count($this->equipments);
-    }
-
-    public function total_price()
-    {
-        $retval = 0;
-        $equipments = $this->equipments;
-
-        foreach($equipments AS $equipment)
-        {
-            $retval +=  $equipment->price;
-        }
-
-        return $retval;
-    }
-
+    'invoice_num',
+    'price',
+    'purchase_date',
+    'equipment_id',
+    'customer_id'
+  ];
+  protected $table = 'invoice';
 }
