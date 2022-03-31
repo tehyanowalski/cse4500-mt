@@ -16,8 +16,8 @@ class ManufacturerController extends Controller
      */
     public function index()
     {
-        $manufacturers = Manufacturer::all();
-        return view('manufacturer.list', compact('manufacturers'));
+        $manufacturer = Manufacturer::all();
+        return view('manufacturer.list', compact('manufacturer'));
     }
 
     /**
@@ -57,7 +57,7 @@ class ManufacturerController extends Controller
     public function show($id)
     {
         $manufacturer = Manufacturer::find($id);
-        return view('manufacturer.detail', compact('manufacturer'));
+        return view('manufacturer.details', compact('manufacturer'));
     }
 
     /**
@@ -66,16 +66,9 @@ class ManufacturerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,  FormBuilder $formBuilder)
+    public function edit($id)
     {
-        $manufacturer = Manufacturer::find($id);
-
-        $form = $formBuilder->create(ManufacturerForm::class, [
-            'method' => 'PUT',
-            'url' => route('manufacturer.update', ['manufacturer'=>$manufacturer->id]),
-            'model' => $manufacturer,
-        ]);
-        return view('manufacturer.create', compact('form'));
+       //
     }
 
     /**
@@ -85,15 +78,9 @@ class ManufacturerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, FormBuilder $formBuilder)
+    public function update(Request $request, $id)
     {
-        $form = $formBuilder->create(ManufacturerForm::class);
-        $form->redirectIfNotValid();
-
-        $manufacturer = Manufacturer::find($id);
-        $manufacturer->update($form->getFieldValues());
-
-        return redirect('/manufacturer/' . $id);
+        //
     }
 
     /**
@@ -103,8 +90,7 @@ class ManufacturerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        Manufacturer::destroy($id);
-        return redirect('/manufacturer');
+    { 
+        //
     }
 }
