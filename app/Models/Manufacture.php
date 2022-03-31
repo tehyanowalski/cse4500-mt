@@ -17,7 +17,7 @@ class Manufacture extends Model
         'sales_phone'
     ];
 
-    public function equipment()
+    public function equipments()
     {
         return $this->hasMany(Equipment::class);
     }
