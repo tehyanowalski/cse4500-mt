@@ -14,24 +14,17 @@
             {{ $customer->fullname }}
         </div>
         <dl class="row">
-            <dt class="col-sm-3">Email</dt>
-            <dd class="col-sm-9">{{ $customer->email }}</dd>
-
             <dt class="col-sm-3">Phone Number</dt>
             <dd class="col-sm-9">{{ $customer->phonenumber }}</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">{{ $customer->email }}</dd>
         </dl>
     </div>
-    <span style="float:right; margin-bottom: 10px">
-        <a href="{{ route('customer.edit', ['customer'=>$customer->id]) }} " class="btn btn-warning">Update</a>
-        <a href="{{ route('customer.destroy',['customer'=>$customer->id]) }}" class="btn btn-danger" onclick="event.preventDefault(); document.getElementById('submit-form').submit();">
-        Delete</a>
-        <form id="submit-form" action="{{ route('customer.destroy',['customer'=>$customer->id]) }}" method="POST" class="hidden">
-            @csrf
-            @method('DELETE')
-        </form>
+    <span style="float:right; margin-bottom: 10px;">
+      <a href="{{ route('customer.destroy' ,['customer'=> $customer->id])}}" class="btn btn-danger" onclick="event.preventDefault(); document.getElementById('submit-form').submit();">Delete</a>
     </span>
-    <table id="table" class="table table-bordered">
-      <thead>
+@stop
         <tr>
           <th style="width: 10px">ID</th>
           <th>Items</th>
