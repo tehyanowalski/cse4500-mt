@@ -18,7 +18,7 @@ class CustomerController extends Controller
     {
         $customers = Customer::all();
         // return json_encode(compact('customer'));
-        return view('customer.list', compact('customer'));
+        return view('customer.list', compact('customers'));
 
     }
 
@@ -54,7 +54,7 @@ class CustomerController extends Controller
     public function show($id)
     {
         $customer = Customer::find($id);
-        $customer->invoices;
+        $customer->purchases;
         return view('customer.detail', compact('customer'));
     }
 
@@ -66,7 +66,14 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $customer = Customer::find($id);
+
+        $form = $formBuilder->create(CustomerForm::class, [
+            'method' => 'PUT',
+            'url' => route('customer.update', ['customer'=>$customer->id]),
+            'model' => $customer,
+        ]);
+        return view('customer.create', compact('form'));
     }
 
     /**
@@ -78,7 +85,13 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $form = $formBuilder->create(CustomerForm::class);
+        $form->redirectIfNotValid();
+
+        $customer = Customer::find($id);
+        $customer->update($form->getFieldValues());
+
+        return redirect('/customer/' . $id);
     }
 
     /**
