@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Purchases;
+use App\Models\Equipment;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\PurchasesForm;
 
-class InvoiceController extends Controller
+class PurchasesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +18,7 @@ class InvoiceController extends Controller
     public function index()
     {
         $purchases = Purchases::all();
-        return json_encode(compact('purchases'));
+        return view('purchases.list', compact('purchases'));
     }
 
     /**
@@ -50,7 +51,6 @@ class InvoiceController extends Controller
         $form = $formBuilder->create(PurchasesForm::class);
         $form->redirectIfNotValid();
         $purchases = Purchases::create($form->getFieldValues());
-        $purchases->equipment()->attach(1);
         return $this->index();
     }
 
@@ -62,22 +62,41 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-        $invoice = Invoice::find($id);
-        // Lazy Loading
-        $invoice->customer;
-        $invoice->equipments;
-        return json_encode(compact('invoice'));
+        $purchases = Purchases::find($id);
+        return view('purchases.detail', compact('purchases'));
     }
 
+    public function deleteItem($purchasesID, $itemID)
+    {
+        $purchases = Purchases::find($purchasesID);
+        $purchases->equipment()->detach($itemID);
+        return redirect('/purchases/' . $purchasesID);
+    }
+    
+    public function addItem($purchasesID, $itemID) 
+    {
+        $purchases = Invoice::find($purchasesID);
+        $purchases->equipment()->attach($itemID);
+        return redirect('/purchases/' . $purchasesID);
+
+    }
+    
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, FormBuilder $formBuilder)
     {
-        //
+        $purchases = Purchases::find($id);
+
+        $form = $formBuilder->create(PurchasesForm::class, [
+            'method' => 'PUT',
+            'url' => route('purchases.update', ['purchases'=>$purchases->id]),
+            'model' => $purchases,
+        ]);
+        return view('purchases.create', compact('form'));
     }
 
     /**
@@ -87,9 +106,15 @@ class InvoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, FormBuilder $formBuilder)
     {
-        //
+        $form = $formBuilder->create(PurchasesForm::class);
+        $form->redirectIfNotValid();
+
+        $purchases = Purchases::find($id);
+        $purchases->update($form->getFieldValues());
+
+        return redirect('/purchases/' . $id);
     }
 
     /**
@@ -100,6 +125,7 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Purchases::destroy($id);
+        return redirect('/purchases');
     }
 }
