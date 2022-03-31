@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('equipment', function (Blueprint $table) {
+        Schema::create('equipments', function (Blueprint $table) {
         $table->id();
             $table->timestamps();
             $table->string("name");
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string("ghz");
             $table->string("ram");
             $table->enum('category', ['desktop', 'laptop', 'tablet']);
-            $table->foreignId('manufacture_id')->constrained("manufacture")->onDelete('cascade');;
+            $table->foreignId('manufacturer_id')->constrained("manufacturers")->onDelete('cascade');;
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('equipment');
+        Schema::dropIfExists('equipments');
     }
 };
