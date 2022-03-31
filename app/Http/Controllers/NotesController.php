@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\Notes;
-
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\NotesForm;
 
@@ -18,7 +16,8 @@ class NotesController extends Controller
      */
     public function index()
     {
-        //
+        $notes = Notes::all();
+        return view('notes.list', compact('notes'));
     }
 
     /**
@@ -30,14 +29,9 @@ class NotesController extends Controller
     {
         $form = $formBuilder->create(NotesForm::class, [
             'method' => 'POST',
-            'url' => route('note.store')
+            'url' => route('notes.store')
         ]);
-
-        $equipment = $request->get('equipment', -1);
-        $form->modify('equipment_id', "number", [
-            'default_value' => $equipment,
-        ]);
-        return view('note.create', compact('form'));
+        return view('notes.create', compact('form'));
     }
 
     /**
@@ -50,8 +44,8 @@ class NotesController extends Controller
     {
         $form = $formBuilder->create(NotesForm::class);
         $form->redirectIfNotValid();
-        $note = Notes::create($form->getFieldValues());
-        return redirect("equipment/" . $note->equipment->id);
+        notes::create($form->getFieldValues());
+        return $this->index();
     }
 
     /**
@@ -62,8 +56,8 @@ class NotesController extends Controller
      */
     public function show($id)
     {
-        $note = Notes::find($id);
-        return view('note.detail', compact('note'));
+        $notes = Notes::find($id);
+        return view('notes.details', compact('notes'));
     }
 
     /**
@@ -97,9 +91,6 @@ class NotesController extends Controller
      */
     public function destroy($id)
     {
-        $note = Notes::find($id);
-        $returnId = $note->equipment->id;
-        Notes::destroy($id);
-        return redirect('/equipment/' . $returnId);
+        //
     }
 }
