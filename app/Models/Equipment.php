@@ -15,14 +15,14 @@ class Equipment extends Model
         'ghz',
         'ram',
         'category',
-        'manufacture_id',
+        'manufacturer_id',
     ];
 
     protected $table = 'equipment';
     
-    public function manufacture()
+    public function manufacturer()
     {
-        return $this->belongsTo(Manufacture::class);
+        return $this->belongsTo(Manufacturer::class);
     }
 
        public function notes()
@@ -37,6 +37,6 @@ class Equipment extends Model
 
     public function purchases()
     {
-        return $this->belongsToMany(Purchases::class, 'purchases_equipment')->distinct();;
+        return $this->belongsToMany(Purchase::class, 'purchase_equipment')->distinct();;
     }
 }
