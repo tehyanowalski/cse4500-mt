@@ -11,11 +11,6 @@ class NotesForm extends Form
     public function buildForm()
     {
         $this
-            ->add('equipment_id', Field::NUMBER, [
-                'rules' => 'required',
-                'label' => 'Equipment ID',
-                'attr' => ['readonly' => 'true'],
-            ])
             ->add('service', Field::TEXT, [
                 'rules' => 'required',
                 'label' => 'Service'
@@ -24,10 +19,11 @@ class NotesForm extends Form
                 'rules' => 'required',
                 'label' => 'Software'
             ])
-            ->add('content', Field::TEXT, [
+             ->add('equipment_id', Field::NUMBER, [
                 'rules' => 'required',
-                'label' => 'Content'
+                'label' => 'Equipment ID',
             ])
+            
             ->add('submit', 'submit',[
                 'label' => 'Submit'
             ]);
