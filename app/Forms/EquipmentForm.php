@@ -17,9 +17,9 @@ class EquipmentForm extends Form
             'rules' => 'required',
             'label' => 'Price'
         ])
-        ->add('version', Field::TEXT, [
+        ->add('ghz', Field::TEXT, [
             'rules' => 'required',
-            'label' => 'Version'
+            'label' => 'GHz'
         ])
         ->add('ram', Field::TEXT, [
             'rules' => 'required',
