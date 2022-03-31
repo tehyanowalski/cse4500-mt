@@ -23,9 +23,6 @@ Route::resource('/equipment', EquipmentController::class);
 Route::resource('/purchase', PurchaseController::class);
 Route::resource('/notes', NotesController::class);
 
-Route::delete('/purchase/{purchaseID}/{itemID}', [PurchaseController::class, 'deleteItem'])->name('equipment.deleteItem');
-Route::post('/purchase/{purchaseID}/{itemID}', [PurchaseController::class, 'addItem'])->name('equipment.addItem');
-
 URL::forceScheme('https');
 
 
