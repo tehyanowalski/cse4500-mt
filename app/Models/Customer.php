@@ -10,9 +10,5 @@ class Customer extends Model
     use HasFactory;
     protected $fillable = ['fullname','email', 'phonenumber'];
 
-    public function purchases()
-    {
-        return $this->hasMany(Purchase::class);
-    }
-    
+    protected $table = 'customer';
 }
