@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Customer')
+@section('title', 'Customers')
 
 @section('content_header')
-    <h1>Customer</h1>
+    <h1>Customers</h1>
 @stop
 
 @section('content')
@@ -16,10 +16,10 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($customer AS $customer)
+        @foreach($customers AS $customer)
         <tr>
           <td>{{ $customer->id }}</td>
-          <td>{{ $customer->name }}</td>
+          <td>{{ $customer->fullname }}</td>
           <td><a class="btn btn-default btn-sm" href="{{ route('customer.show',['customer'=>$customer->id]) }}">View</a></td>
         </tr>
         @endforeach
