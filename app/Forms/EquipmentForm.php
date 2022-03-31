@@ -9,11 +9,11 @@ use App\Models\Manufacture;
 
 
 
-function getManufacute() {
+function getManufacturers() {
     $retVal = array();
-    $manufacute = Manufacture::where('id' ,'>' ,0)->get();
-    foreach($manufacuter as $manufacute) {
-        $retVal[strval($manufacute["id"])] = strval($manufacute["name"]);
+    $manufacturer = Manufacturer::where('id' ,'>' ,0)->get();
+    foreach($manufacturers as $manufacturer) {
+        $retVal[strval($manufacturer["id"])] = strval($manufacturer["name"]);
     }
     return $retVal;
 }
@@ -46,9 +46,9 @@ class EquipmentForm extends Form
         ])
         ->add('manufacturer_id', Field::SELECT, [
             'rules' => 'required',
-            'label' => 'Manufacture',
-            'choices' => getManufacute(),
-            'empty_value' => '=== Select Manufacture ==='
+            'label' => 'Manufacturer',
+            'choices' => getManufacturer(),
+            'empty_value' => '=== Select Manufacturer ==='
         ])
         ->add('submit', 'submit',[
             'label' => 'Submit'
