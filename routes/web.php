@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\ManufactureController;
+use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\EquipmentController;
-use App\Http\Controllers\PurchasesController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\NotesController;
 /*
 |--------------------------------------------------------------------------
@@ -18,13 +18,13 @@ use App\Http\Controllers\NotesController;
 */
 
 Route::resource('/customer', CustomerController::class);
-Route::resource('/manufacture', ManufactureController::class);
+Route::resource('/manufacturer', ManufacturerController::class);
 Route::resource('/equipment', EquipmentController::class);
-Route::resource('/purchases', PurchasesController::class);
+Route::resource('/purchase', PurchaseController::class);
 Route::resource('/notes', NotesController::class);
 
-Route::delete('/purchases/{purchasesID}/{itemID}', [PurchasesController::class, 'deleteItem'])->name('equipment.deleteItem');
-Route::post('/purchases/{purchasesID}/{itemID}', [PurchasesController::class, 'addItem'])->name('equipment.addItem');
+Route::delete('/purchase/{purchaseID}/{itemID}', [PurchaseController::class, 'deleteItem'])->name('equipment.deleteItem');
+Route::post('/purchase/{purchaseID}/{itemID}', [PurchaseController::class, 'addItem'])->name('equipment.addItem');
 
 URL::forceScheme('https');
 
