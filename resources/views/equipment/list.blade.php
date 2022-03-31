@@ -20,14 +20,12 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($equipments AS $equipment)
+        @foreach($equipment AS $equipment)
         <tr>
           <td>{{ $equipment->id }}</td>
-          <td>{{ $equipment->manufacturer_id }}</td>
-          <td>{{ ucwords($equipment->category) }}</td>
           <td>{{ $equipment->name }}</td>
-          <td>{{ $equipment->num_of_notes() }}</td>
-
+          <td>{{ $equipment->category) }}</td>
+          <td>{{ $equipment->manufacture_id }}</td>
           <td><a class="btn btn-default btn-sm" href="{{ route('equipment.show',['equipment'=>$equipment->id]) }}">View</a></td>
         </tr>
         @endforeach
