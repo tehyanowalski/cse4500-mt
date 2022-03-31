@@ -7,7 +7,7 @@ use Kris\LaravelFormBuilder\Field;
 
 
 
-class PurchasesForm extends Form
+class PurchaseForm extends Form
 {
     public function buildForm()
     {
