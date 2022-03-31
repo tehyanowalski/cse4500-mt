@@ -18,7 +18,7 @@ class EquipmentController extends Controller
     public function index()
     {
         $equipment = Equipment::all();
-        return json_encode(compact('equipment'));
+        return view('equipment.list', compact('equipments'));
     }
 
     /**
@@ -57,7 +57,8 @@ class EquipmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $equipment = Equipment::find($id);
+        return view('equipment.detail', compact('equipment'));
     }
 
     /**
@@ -68,7 +69,14 @@ class EquipmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $equipment = Equipment::find($id);
+
+        $form = $formBuilder->create(EquipmentForm::class, [
+            'method' => 'PUT',
+            'url' => route('equipment.update', ['equipment'=>$equipment->id]),
+            'model' => $equipment,
+        ]);
+        return view('equipment.create', compact('form'));
     }
 
     /**
@@ -80,7 +88,13 @@ class EquipmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $form = $formBuilder->create(EquipmentForm::class);
+        $form->redirectIfNotValid();
+
+        $equipment = Equipment::find($id);
+        $equipment->update($form->getFieldValues());
+
+        return redirect('/equipment/' . $id);
     }
 
     /**
@@ -91,6 +105,7 @@ class EquipmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Equipment::destroy($id);
+        return redirect('/equipment');
     }
 }
