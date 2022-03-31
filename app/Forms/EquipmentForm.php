@@ -5,6 +5,17 @@ namespace App\Forms;
 use Kris\LaravelFormBuilder\Form;
 use Kris\LaravelFormBuilder\Field;
 
+use App\Models\Manufacturer;
+
+function getManufacuters() {
+    $retVal = array();
+    $manufacuters = Manufacturer::where('id' ,'>' ,0)->get();
+    foreach($manufacuters as $manufacuter) {
+        $retVal[strval($manufacuter["id"])] = strval($manufacuter["name"]);
+    }
+    return $retVal;
+}
+
 class EquipmentForm extends Form
 {
     public function buildForm()
