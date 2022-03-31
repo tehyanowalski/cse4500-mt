@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\Notes;
+
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\NotesForm;
 
@@ -16,7 +18,7 @@ class NotesController extends Controller
      */
     public function index()
     {
-          //
+        //
     }
 
     /**
@@ -60,8 +62,8 @@ class NotesController extends Controller
      */
     public function show($id)
     {
-        $notes= Notes::find($id); 
-        return view('note.show',compact('note'));
+        $note = Notes::find($id);
+        return view('note.detail', compact('note'));
     }
 
     /**
