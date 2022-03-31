@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Purchases extends Model
+class Purchase extends Model
 {
     use HasFactory;
 
@@ -22,7 +22,7 @@ class Purchases extends Model
 
     public function equipments()
     {
-        return $this->belongsToMany(Equipment::class, 'purchases_equipment')->distinct();;
+        return $this->belongsToMany(Equipment::class, 'purchase_equipment')->distinct();;
     }
 
     public function number_of_items()
