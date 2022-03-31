@@ -5,7 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ManufactureController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\PurchasesController;
-use App\Http\Controllers\Notes;
+use App\Http\Controllers\NotesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +22,9 @@ Route::resource('/manufacture', ManufactureController::class);
 Route::resource('/equipment', EquipmentController::class);
 Route::resource('/purchases', PurchasesController::class);
 Route::resource('/notes', NotesController::class);
+
+Route::delete('/purchases/{purchasesID}/{itemID}', [PurchasesController::class, 'deleteItem'])->name('equipment.deleteItem');
+Route::post('/purchases/{purchasesID}/{itemID}', [PurchasesController::class, 'addItem'])->name('equipment.addItem');
 
 URL::forceScheme('https');
 
