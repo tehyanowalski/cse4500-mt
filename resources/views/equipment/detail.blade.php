@@ -17,10 +17,10 @@
             <dt class="col-sm-3">Price</dt>
             <dd class="col-sm-9">${{ $equipment->price }}</dd>
 
-            <dt class="col-sm-3">Manufacture</dt>
+            <dt class="col-sm-3">Manufacturer</dt>
             <dd class="col-sm-9">
-                <a href="{{ route('manufacture.show',['manufacture'=>$equipment->manufacture->id]) }}">
-                    {{ $equipment->manufacture->name }}
+                <a href="{{ route('manufacturer.show',['manufacturer'=>$equipment->manufacturer->id]) }}">
+                    {{ $equipment->manufacturer->name }}
                 </a>
             </dd>
 
@@ -39,6 +39,7 @@
         <a href="{{ route('equipment.edit', ['equipment'=>$equipment->id]) }} " class="btn btn-warning">Update</a>
         <a href="{{ route('equipment.destroy',['equipment'=>$equipment->id]) }}" class="btn btn-danger" onclick="event.preventDefault(); document.getElementById('submit-form').submit();">
         Delete</a>
+        <!-- This is ugly but who even cares anymore -->
         <form id="submit-form" action="{{ route('equipment.destroy',['equipment'=>$equipment->id]) }}" method="POST" class="hidden">
             @csrf
             @method('DELETE')
