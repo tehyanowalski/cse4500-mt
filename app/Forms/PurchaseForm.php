@@ -24,7 +24,7 @@ class PurchaseForm extends Form
                 'rules' => 'required',
                 'label' => 'Purchase Date'
             ])
-            ->add('equipment_id', Field::DATE, [
+            ->add('equipment_id', Field::NUMBER, [
                 'rules' => 'required',
                 'label' => 'Equipment ID'
             ])
@@ -33,7 +33,7 @@ class PurchaseForm extends Form
                 'label' => 'Customer ID'
             ])
             
-            add('submit', 'submit',[
+            ->add('submit', 'submit',[
                 'label' => 'Submit'
             ]);
     }
