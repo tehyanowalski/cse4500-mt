@@ -25,7 +25,7 @@
         <a href="{{ route('customer.edit', ['customer'=>$customer->id]) }} " class="btn btn-warning">Update</a>
         <a href="{{ route('customer.destroy',['customer'=>$customer->id]) }}" class="btn btn-danger" onclick="event.preventDefault(); document.getElementById('submit-form').submit();">
         Delete</a>
-     <form id="submit-form" action="{{ route('customer.destroy',['customer'=>$customer->id]) }}" method="POST" class="hidden">
+        <form id="submit-form" action="{{ route('customer.destroy',['customer'=>$customer->id]) }}" method="POST" class="hidden">
             @csrf
             @method('DELETE')
         </form>
@@ -41,13 +41,13 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($customer->purchases AS $purchases)
+        @foreach($customer->purchases AS $purchase)
         <tr>
-          <td>{{ $purchases->id }}</td>
-          <td>{{ $purchases->number_of_items() }}</td>
-          <td>${{ $purchases->total_price() }}</td>
-          <td>{{ $purchases->purchase_date }}</td>
-          <td><a class="btn btn-default btn-sm" href="{{ route('purchases.show',['purchases'=>$purchases->id]) }}">View</a></td>
+          <td>{{ $purchase->id }}</td>
+          <td>{{ $purchase->number_of_items() }}</td>
+          <td>${{ $purchase->total_price() }}</td>
+          <td>{{ $purchase->purchase_date }}</td>
+          <td><a class="btn btn-default btn-sm" href="{{ route('purchase.show',['purchase'=>$purchase->id]) }}">View</a></td>
         </tr>
         @endforeach
       </tbody>
