@@ -12,27 +12,31 @@ class Equipment extends Model
     protected $fillable = [
         'name',
         'price',
-        'version',
+        'ghz',
         'ram',
         'category',
         'manufacture_id',
-        'notes_id'
     ];
 
     protected $table = 'equipment';
-
-    public function notes()
-    {
-        return $this->hasMany(Notes::class);
-    }
     
     public function manufacture()
     {
         return $this->belongsTo(Manufacture::class);
     }
 
+       public function notes()
+    {
+        return $this->hasMany(Notes::class);
+    }
+    
+      public function num_of_notes()
+    {
+        return count($this->notes);
+    }
+
     public function purchases()
     {
-        return $this->belongsToMany(Purchases::class);
+        return $this->belongsToMany(Purchases::class, 'purchases_equipment')->distinct();;
     }
 }
