@@ -235,7 +235,7 @@ return [
             'icon' => 'fas fa-fw fa-desktop',
         ],
         [
-            'text' => 'Manufacture',
+            'text' => 'Manufacturer',
             'url'  => 'manufacturer',
             'icon' => 'fas fa-fw fa-briefcase',
         ],
