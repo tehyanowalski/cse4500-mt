@@ -14,15 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('equipment', function (Blueprint $table) {
-            $table->id();
+        $table->id();
             $table->timestamps();
             $table->string("name");
             $table->string("price");
-            $table->string("version");
+            $table->string("ghz");
             $table->string("ram");
             $table->enum('category', ['desktop', 'laptop', 'tablet']);
-            $table->foreignId('manufacture_id')->constrained("manufacture");
-
+            $table->foreignId('manufacture_id')->constrained("manufacture")->onDelete('cascade');;
         });
     }
 
