@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\EquipmentController;
-use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\NotesController;
+use App\Http\Controllers\ManufactureController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\NoteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,29 +17,18 @@ use App\Http\Controllers\NotesController;
 |
 */
 
-Route::resource('/customer', CustomerController::class);
-Route::resource('/manufacturer', ManufacturerController::class);
-Route::resource('/equipment', EquipmentController::class);
-Route::resource('/purchase', PurchaseController::class);
-Route::resource('/notes', NotesController::class);
-
-URL::forceScheme('https');
-
-
-Route::get('/db-migrate', function () {
-    Artisan::call('migrate');
-    echo Artisan::output();
-});
-
-Route::get('/db-test', function () {
-    try {         
-         echo \DB::connection()->getDatabaseName();     
-    } catch (\Exception $e) {
-          echo 'None';
-    }
-});
-
-
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('equipment', EquipmentController::class);
+
+Route::resource('manufactures', ManufactureController::class);
+
+Route::resource('categories', CategoryController::class);
+
+Route::resource('users', UserController::class);
+
+Route::resource('notes', NoteController::class)->except(['create','store']);
+Route::get('/notes/create/{equipment}', [NoteController::class,'create'])->name('notes.create');
+Route::post('/notes/create/{equipment}', [NoteController::class,'store'])->name('notes.store');
