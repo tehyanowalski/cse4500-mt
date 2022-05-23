@@ -2,95 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Equipment;
+use App\Models\Note;
 use Illuminate\Http\Request;
-use App\Models\Notes;
-use Kris\LaravelFormBuilder\FormBuilder;
-use App\Forms\NotesForm;
 
-class NotesController extends Controller
+class NoteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $notes = Notes::all();
-        return view('notes.list', compact('notes'));
+        //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(FormBuilder $formBuilder, Request $request)
+
+    public function create(Equipment $equipment)
     {
-        $form = $formBuilder->create(NotesForm::class, [
-            'method' => 'POST',
-            'url' => route('notes.store')
+        return view('note.create',compact('equipment'));
+    }
+
+
+    public function store(Request $request, Equipment $equipment)
+    {
+        $validated = $request->validate([
+          'subject' => 'required',
+          'content' => 'required',
         ]);
-        return view('notes.create', compact('form'));
+        $note = Note::create([
+          'subject' => $request['subject'],
+          'content' => $request['content'],
+          'equipment_id' => $equipment->id
+        ]);
+
+        return redirect()->route('equipment.show',compact('equipment'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(FormBuilder $formBuilder)
-    {
-        $form = $formBuilder->create(NotesForm::class);
-        $form->redirectIfNotValid();
-        notes::create($form->getFieldValues());
-        return $this->index();
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $notes = Notes::find($id);
-        return view('notes.details', compact('notes'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function show(Note $note)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+    public function edit(Note $note)
     {
-        //
+        $equipment = $note->equipment;
+        return view('note.edit',compact('equipment','note'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function update(Request $request, Note $note)
     {
-        //
+      $validated = $request->validate([
+        'subject' => 'required',
+        'content' => 'required',
+      ]);
+      $note->fill($request->all())->save();
+      $equipment = $note->equipment;
+      return redirect()->route('equipment.show',compact('equipment'));
+    }
+
+
+    public function destroy(Note $note)
+    {
+      $note->delete();
+      $equipment = $note->equipment;
+      return redirect()->route('equipment.show',compact('equipment'));
     }
 }
