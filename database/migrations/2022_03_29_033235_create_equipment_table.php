@@ -15,13 +15,18 @@ return new class extends Migration
     {
         Schema::create('equipment', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('manufacture_id')->constrained();
+            $table->foreignId('category_id')->constrained();
+            $table->foreignId('user_id')->constrained(); 
+            $table->string('model');
+            $table->string('CPU')->nullable();
+            $table->string('memory')->nullable();
+            $table->string('storage')->nullable();
+            $table->string('invoice_number');
+            $table->string('price');
+            $table->string('purchase_date');
+            $table->softDeletes();
             $table->timestamps();
-            $table->string("name");
-            $table->string("price");
-            $table->string("ghz");
-            $table->string("ram");
-            $table->enum('category', ['desktop', 'laptop', 'tablet']);
-            $table->foreignId('manufacturer_id')->constrained("manufacturers");
         });
     }
 
