@@ -2,96 +2,91 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Equipment;
-use Kris\LaravelFormBuilder\FormBuilder;
-use App\Forms\EquipmentForm;
+use App\Models\Manufacture;
+use App\Models\Category;
+use App\Models\User;
+use App\Models\Note;
+
+use Illuminate\Http\Request;
 
 
 class EquipmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $equipment = Equipment::all();
-        return view('equipment.list', compact('equipment'));
+        $equipments = Equipment::with('manufacture','users','category','notes')->get();
+        $response['data'] = $equipments;
+        return json_encode($response);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(FormBuilder $formBuilder)
+    public function create()
     {
-        $form = $formBuilder->create(EquipmentForm::class, [
-            'method' => 'POST',
-            'url' => route('equipment.store')
+        $manufactures = Manufacture::all();
+        $categories = Category::all();
+        $users = User::all();
+        return view('equipment.create',compact('manufactures','categories','users'));
+    }
+
+
+    public function store(Request $request)
+    {
+      $validated = $request->validate([
+        'manufacture_id' => 'required',
+        'category_id' => 'required',
+        'model' => 'required',
+        'invoice_number' => 'required',
+        'price' => 'required',
+        'purchase_date' => 'required'
+      ]);
+
+      $equipment = Equipment::create($request->all());
+      if($request['user_id'] != "") {
+        $equipment->users()->attach($request['user_id']);
+      }
+
+      return redirect()->route('equipment.show',compact('equipment'));
+    }
+
+
+    public function show(Equipment $equipment)
+    {
+        return view('equipment.show',compact('equipment'));
+    }
+
+
+    public function edit(Equipment $equipment)
+    {
+        $manufactures = Manufacture::all();
+        $categories = Category::all();
+        $users = User::all();
+        return view('equipment.edit',compact('equipment','manufactures','categories','users'));
+    }
+
+
+    public function update(Request $request, Equipment $equipment)
+    {
+        $validated = $request->validate([
+          'manufacture_id' => 'required',
+          'category_id' => 'required',
+          'model' => 'required',
+          'invoice_number' => 'required',
+          'price' => 'required',
+          'purchase_date' => 'required'
         ]);
-        return view('equipment.create', compact('form'));
+
+        $equipment->fill($request->all())->save();
+        if($request['user_id'] != "" && $request['user_id'] != $equipment->users->first()->id) {
+          $equipment->users()->attach($request['user_id']);
+        }
+
+        return redirect()->route('equipment.show',compact('equipment'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(FormBuilder $formBuilder)
+    public function destroy(Equipment $equipment)
     {
-        $form = $formBuilder->create(EquipmentForm::class);
-        $form->redirectIfNotValid();
-        Equipment::create($form->getFieldValues());
-        return $this->index();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $equipment = Equipment::find($id);
-        return view('equipment.details', compact('equipment'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $equipment->delete();
+        return redirect()->back();
     }
 }
