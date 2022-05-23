@@ -2,90 +2,67 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Customer;
-use Kris\LaravelFormBuilder\FormBuilder;
-use App\Forms\CustomerForm;
+use Illuminate\Support\Str;
 
-
-
-class CustomerController extends Controller
+class UserController extends Controller
 {
-    /**
-     * List View
-     */
+
     public function index()
     {
-        $customer = Customer::all();
-        return view('customer.list', compact('customer'));
+        $users = User::all();
+        return view('user.index',compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(FormBuilder $formBuilder)
+
+    public function create()
     {
-        $form = $formBuilder->create(CustomerForm::class, [
-            'method' => 'POST',
-            'url' => route('customer.store')
+        return view('user.create');
+    }
+
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+          'name' => 'required',
+          'email' => 'required|unique:users,email'
         ]);
-        return view('customer.create', compact('form'));
+        $user = User::create([
+          'name' => $request['name'],
+          'email' => $request['email'],
+          'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+          'remember_token' => Str::random(10),
+        ]);
+        return redirect()->route('users.show',compact('user'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(FormBuilder $formBuilder)
+
+    public function show(User $user)
     {
-        $form = $formBuilder->create(CustomerForm::class);
-        $form->redirectIfNotValid();
-        Customer::create($form->getFieldValues());
-        return $this->index();
+        return view('user.show',compact('user'));
     }
 
-    /**
-     * Detail View
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+    public function edit(User $user)
     {
-        $customer = Customer::find($id);
-        return view('customer.details', compact('customer'));
+        return view('user.edit',compact('user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+
+    public function update(Request $request, User $user)
     {
-        //
+        $validated = $request->validate([
+          'name' => 'required',
+          'email' => 'required|unique:users,email'
+        ]);
+        $user->fill($request->all())->save();
+        return redirect()->route('users.show',compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+    public function destroy(User $user)
     {
         //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-      //
     }
 }
