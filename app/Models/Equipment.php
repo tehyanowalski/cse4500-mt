@@ -4,36 +4,38 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Purchase;
-use App\Models\Notes;
-use App\Models\Manufacturer;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Equipment extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name',
-        'price',
-        'ghz',
-        'ram',
-        'category',
-        'manufacturer_id',
+      'manufacture_id',
+      'category_id',
+      'model',
+      'CPU',
+      'memory',
+      'storage',
+      'invoice_number',
+      'price',
+      'purchase_date'
     ];
-    protected $table = 'equipment';
-    
-    public function manufacturer()
-    {
-        return $this->belongsTo(Manufacturer::class);
+
+
+    public function manufacture() {
+      return $this->belongsTo(Manufacture::class);
     }
 
-       public function notes()
-    {
-        return $this->hasMany(Notes::class);
+    public function category() {
+      return $this->belongsTo(Category::class);
     }
 
-    public function purchases()
-    {
-        return $this->belongsToMany(Purchase::class, 'purchase_equipment')->distinct();;
+    public function notes() {
+      return $this->hasMany(Note::class);
+    }
+
+    public function users() {
+      return $this->belongsToMany(User::class);
     }
 }
