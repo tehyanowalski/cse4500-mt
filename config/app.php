@@ -167,7 +167,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
         
         /*
          * Application Service Providers...
@@ -193,7 +192,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // ...
-        'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
+       
     ])->toArray(),
 
 ];
