@@ -13,13 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('notes', function (Blueprint $table) {
-          $table->id();
+        Schema::create('equipment', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('manufacture_id')->constrained();
+            $table->foreignId('category_id')->constrained();
+            $table->foreignId('user_id')->constrained(); 
+            $table->string('model');
+            $table->string('CPU')->nullable();
+            $table->string('memory')->nullable();
+            $table->string('storage')->nullable();
+            $table->string('invoice_number');
+            $table->string('price');
+            $table->string('purchase_date');
+            $table->softDeletes();
             $table->timestamps();
-            $table->string("service");
-            $table->string("software");
-            $table->string("content");
-            $table->foreignId('equipment_id')->constrained("equipment")->onDelete('cascade');;
         });
     }
 
@@ -30,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notes');
+        Schema::dropIfExists('equipment');
     }
 };
