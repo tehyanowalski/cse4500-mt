@@ -3,61 +3,122 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>{{ $equipment->manufacture->name }} - {{ $equipment->model }}</h1>
+    <h1>
+      <a href="{{ route('manufactures.show',['manufacture'=>$equipment->manufacture->id]) }}">{{ $equipment->manufacture->name }}</a>
+      - {{ $equipment->model }}
+      <a href="{{ route('categories.show',['category'=>$equipment->category->id]) }}">{{ $equipment->category->name }}</a>
+    </h1>
 @stop
 
 @section('content')
 <div class="row">
-  <div class="col-md-12">
-    <form action="{{ route('equipment.update',['equipment'=>$equipment->id]) }}" method="POST">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Edit equipment</h3>
-        </div>
-        <div class="card-body">
-          @csrf
-          <input type="hidden" name="_method" value="PUT" />
-          <div class="row">
-              <x-adminlte-select name="manufacture_id" label="Manufacture *" fgroup-class="col-md-6" >
-                @foreach($manufactures AS $item)
-                  <option value="{{ $item->id }}" {{ $equipment->manufacture_id==$item->id?'selected':'' }}>{{ $item->name }}</option>
-                @endforeach
-              </x-adminlte-select>
-              <x-adminlte-select name="category_id" label="Category *" fgroup-class="col-md-6" >
-                @foreach($categories AS $item)
-                  <option value="{{ $item->id }}" {{ $equipment->category_id==$item->id?'selected':'' }}>{{ $item->name }}</option>
-                @endforeach
-              </x-adminlte-select>
-              <x-adminlte-input name="model" label="Model *" fgroup-class="col-md-6" value="{{ $equipment->model }}" />
-              <x-adminlte-input name="CPU" label="CPU" fgroup-class="col-md-6" value="{{ $equipment->CPU }}" />
-              <x-adminlte-input name="memory" label="Memory" fgroup-class="col-md-6" value="{{ $equipment->memory }}" />
-              <x-adminlte-input name="storage" label="Storage" fgroup-class="col-md-6" value="{{ $equipment->storage }}" />
-              <x-adminlte-input name="invoice_number" label="Invoice Number *" fgroup-class="col-md-6" value="{{ $equipment->invoice_number }}" />
-              <x-adminlte-input name="price" label="Price *" fgroup-class="col-md-6" value="{{ $equipment->price }}" />
-              <x-adminlte-input name="purchase_date" label="Purchase Date *" fgroup-class="col-md-6" type="date" value="{{ $equipment->purchase_date }}" />
-              <x-adminlte-select name="user_id" label="Current User" fgroup-class="col-md-6" >
-                <option value="">N/A</option>
-                @foreach($users AS $item)
-                  <option value="{{ $item->id }}" {{ $equipment->users->first()->id==$item->id?'selected':'' }}>{{ $item->name }}</option>
-                @endforeach
-              </x-adminlte-select>
-          </div>
-        </div>
-        <div class="card-footer">
-          <button type="Submit" class="btn btn-primary float-right">Submit</button>
-          <a href="{{ url()->previous() }}" class="btn btn-danger">Cancel</a>
+  <div class="col-md-3">
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Details</h3>
+      </div>
+      <div class="card-body">
+        <strong><i class="fas fa-book mr-1"></i> Hardware Specification</strong>
+        <p class="text-muted">
+          CPU: {{ $equipment->CPU }}<br>
+          RAM: {{ $equipment->memory }}<br>
+          Storage{{ $equipment->storage }}
+        </p>
+        <hr>
+        <strong><i class="far fa-file-alt mr-1"></i> Purchase Info</strong>
+        <p class="text-muted">
+          Invoice#: {{ $equipment->invoice_number }}<br>
+          Price: $ {{ $equipment->price }}<br>
+          Purchase Date: {{ $equipment->purchase_date }}
+        </p>
+      </div>
+      <div class="card-footer">
+        <a class="btn btn-success btn-block" href="{{ route('equipment.edit',['equipment'=>$equipment]) }}">Edit</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-9">
+    <div class="card card-warning">
+      <div class="card-header">
+        <h3 class="card-title">Notes</h3>
+        <div class="card-tools">
+        <a href="{{ route('notes.create',['equipment'=>$equipment->id]) }}" class="btn btn-tool" ><i class="fas fa-plus"></i> Add</a>
         </div>
       </div>
-    </form>
+      <div class="card-body p-0">
+        <table id="note_table" class="table table-sm" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Content</th>
+                    <th>Create Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($equipment->notes AS $note)
+                <tr>
+                    <td>{{ $note->subject }}</td>
+                    <td>{{ $note->content }}</td>
+                    <td>{{ $note->created_at }}</td>
+                    <td>
+                      <a class="btn btn-primary btn-xs" href="{{ route('notes.edit',['note'=>$note->id]) }}">Edit</a>
+                      <form action="{{ route('notes.destroy',['note'=>$note->id]) }}" method="POST" >
+                        @csrf
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <button type="submit" class="btn btn-danger btn-xs">Delete</button>
+                      </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card  card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Users</h3>
+      </div>
+      <div class="card-body p-0">
+        <table id="user_table" class="table table-sm" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name </th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($equipment->users AS $user)
+                <tr>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td><a class="btn btn-primary btn-xs" href="{{ route('users.show',['user'=>$user->id]) }}">View</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+      </div>
+    </div>
   </div>
+
 </div>
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+
 @stop
 
 @section('js')
     <script>
+    $(document).ready(function() {
+      $('.table').DataTable({
+        "paging":   false,
+        "info":     false,
+        "searching": false
+      });
+    });
     </script>
 @stop
